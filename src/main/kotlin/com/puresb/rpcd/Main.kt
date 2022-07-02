@@ -13,7 +13,8 @@ fun main(args: Array<String>) {
     val classes = ClassPool.fromJar(fileName)
 
     val transformers = listOf(
-        RemoveNamedAnnotations()
+        RemoveNamedAnnotations(),
+        RemoveDependencies(),
     )
 
     transformers.forEach {
