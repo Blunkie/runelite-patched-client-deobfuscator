@@ -9,8 +9,8 @@ fun main(args: Array<String>) {
     logger.info { "Program arguments: ${args.joinToString()}" }
     logger.info { "Starting..." }
 
-    val fileName = args.joinToString("")
-    val classes = ClassPool.fromJar(fileName)
+    val patchedClientFileName = args[0]
+    val classes = ClassPool.fromJar(patchedClientFileName)
 
     val transformers = listOf(
         RemoveNamedAnnotations(),
@@ -21,8 +21,20 @@ fun main(args: Array<String>) {
         it.apply(classes)
     }
 
-    val outputFileName = fileName.replace(".jar", "-out.jar")
+    val outputFileName = patchedClientFileName.replace(".jar", "-out.jar")
     classes.writeJar(outputFileName)
 
-    logger.info { "Done" }
+    logger.info { "Wrote deobbed patched client." }
+
+    if (args.size > 1) {
+        val vanillaClient = args[1]
+        logger.info { "Comparing to vanilla client..." }
+
+        val vanillaClasses = ClassPool.fromJar(vanillaClient)
+        val diff = BasicClassPoolDiff()
+        diff.compute(vanillaClasses, classes)
+        diff.logResults()
+    }
+
+    logger.info { "Done!" }
 }

@@ -4,10 +4,7 @@ import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.jar.JarEntry
 import java.util.jar.JarFile
-import java.util.jar.JarOutputStream
-import kotlin.io.path.outputStream
 
 class ClassPool private constructor() : Iterable<ClassNode> {
     private val classesByName = mutableMapOf<String, ClassNode>()
@@ -21,9 +18,15 @@ class ClassPool private constructor() : Iterable<ClassNode> {
         classesByName[node.name] = node
     }
 
+    fun get(name: String) = classesByName[name]
+
+    fun remove(name: String) {
+        classesByName.remove(name)
+    }
+
     fun classes() = classesByName.values.toList()
 
-    fun classNames() = classesByName.keys
+    fun classNames() = classesByName.keys.toList()
 
     fun writeJar(fileName: String) {
         val f = Paths.get(fileName)
