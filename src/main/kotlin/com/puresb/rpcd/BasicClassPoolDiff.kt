@@ -95,4 +95,15 @@ class BasicClassPoolDiff {
             logger.debug { "rm field: $it" }
         }
     }
+
+    fun logSummary() {
+        val netClasses = addedClasses.size - removedClasses.size
+        logger.info { "Classes: +${addedClasses.size} / -${removedClasses.size} (net=$netClasses)" }
+
+        val netMethods = addedMethods.size - removedMethods.size
+        logger.info { "Methods: +${addedMethods.size} / -${removedMethods.size} (net=$netMethods)" }
+
+        val netFields = addedFields.size - removedFields.size
+        logger.info { "Fields: +${addedFields.size} / -${removedFields.size} (net=$netFields)" }
+    }
 }

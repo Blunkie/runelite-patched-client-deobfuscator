@@ -34,6 +34,7 @@ fun main(args: Array<String>) {
         val diff = BasicClassPoolDiff()
         diff.compute(vanillaClasses, classes)
         diff.logResults()
+        diff.logSummary()
     }
 
     logger.info { "Done!" }
