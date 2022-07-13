@@ -76,27 +76,27 @@ class BasicClassPoolDiff {
     }
 
     fun logResults() {
-        addedClasses.forEach {
+        addedClasses.sorted().forEach {
             logger.debug { "add class: $it" }
         }
 
-        removedClasses.forEach {
+        removedClasses.sorted().forEach {
             logger.debug { "rm class: $it" }
         }
 
-        addedMethods.forEach {
+        addedMethods.sorted().forEach {
             logger.debug { "add method: $it" }
         }
 
-        removedMethods.forEach {
+        removedMethods.sorted().forEach {
             logger.debug { "rm method: $it" }
         }
 
-        addedFields.forEach {
+        addedFields.sorted().forEach {
             logger.debug { "add field: $it" }
         }
 
-        removedFields.forEach {
+        removedFields.sorted().forEach {
             logger.debug { "rm field: $it" }
         }
     }
