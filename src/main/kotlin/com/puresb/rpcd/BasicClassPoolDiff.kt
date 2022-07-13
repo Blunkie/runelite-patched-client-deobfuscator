@@ -12,6 +12,7 @@ private val logger = KotlinLogging.logger {}
  * The contents of new classes are not examined!
  */
 class BasicClassPoolDiff {
+    val ignoredNamespaces = listOf("org/bouncycastle", "org/json")
     val addedClasses = mutableListOf<String>()
     val removedClasses = mutableListOf<String>()
     val addedMethods = mutableListOf<String>()
@@ -21,6 +22,10 @@ class BasicClassPoolDiff {
 
     fun compute(original: ClassPool, updated: ClassPool) {
         original.forEach { thiz ->
+            if (ignoredNamespaces.any { thiz.name.startsWith(it) }) {
+                return@forEach
+            }
+
             val other = updated.get(thiz.name)
 
             if (other == null) {
