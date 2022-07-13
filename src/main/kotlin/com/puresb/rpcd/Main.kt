@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     val transformers = listOf(
         RemoveNamedAnnotations(),
         RemoveDependencies(),
+        SortMembers(),
     )
 
     transformers.forEach {
